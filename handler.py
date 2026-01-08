@@ -7,14 +7,11 @@ import runpod
 def debug_mounts(paths_to_check=None):
     paths_to_check = paths_to_check or [
         "/",
-        "/workspace",
-        "/workspace/SyncTalk_2D",
-        "/workspace/SyncTalk_2D/checkpoint",
-        "/workspace/SyncTalk_2D/checkpoint/Judy",
         "/runpod-volume",
-        "/data",
-        "/mnt",
-        "/mnt/volume",
+        "/runpod-volume/SyncTalk_2D",
+        "/runpod-volume/SyncTalk_2D/checkpoint",
+        "/runpod-volume/SyncTalk_2D/checkpoint/Judy",
+        "/runpod-volume",
     ]
 
     info = {
@@ -94,7 +91,7 @@ def debug_mounts(paths_to_check=None):
 
     # 3) Диск usage по ключових директоріях
     # (через statvfs — видно різні filesystem за різним dev / free space)
-    for p in ["/", "/workspace", "/runpod-volume", "/data"]:
+    for p in ["/", "/runpod-volume", "/data"]:
         try:
             if os.path.exists(p):
                 v = os.statvfs(p)
