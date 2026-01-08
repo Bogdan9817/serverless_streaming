@@ -7,3 +7,5 @@ soundfile
 librosa
 onnxruntime-gpu
 configargparse
+brotlicffi
+brotli
