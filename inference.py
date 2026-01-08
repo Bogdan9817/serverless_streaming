@@ -137,8 +137,8 @@ class InferenceService:
 
 
 services = {}
-for name in os.getenv("MODEL_NAMES").split(","):
-    services[name.strip()] = InferenceService(name=name)
+
+services["Judy"] = InferenceService(name="Judy")
 
 
 def get_inference_service():
