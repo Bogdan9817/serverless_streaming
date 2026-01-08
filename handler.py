@@ -1,21 +1,19 @@
 import runpod
 import base64
-import time
+from inference import get_inference_service
+import cv2
+
+service = get_inference_service()
 
 
 def generator_handler(job):
-    for i in range(5):
-        payload = f"chunk_{i}_data".encode("utf-8")
-
-        yield {
-            "status": "processing",
-            "i": i,
-            "chunk_b64": base64.b64encode(payload).decode("ascii"),
-        }
-
-        time.sleep(0.2)
-
-    yield {"status": "completed"}
+    job_input = job["input"]
+    audio_data = job_input.get("audio_data")
+    model_name = job_input.get("model_name", "Iris")
+    for frame, _ in service[model_name].generate_frames(audio_data):
+        _, buffer = cv2.imencode(".jpg", frame)
+        jpg_as_text = base64.b64encode(buffer).decode("utf-8")
+        yield {"frame": jpg_as_text}
 
 
 runpod.serverless.start({"handler": generator_handler, "return_aggregate_stream": True})
