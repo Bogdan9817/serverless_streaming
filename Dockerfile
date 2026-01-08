@@ -12,5 +12,9 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY handler.py .
+COPY inference.py .
+COPY utils.py .
+COPY unet_328.py .
+
 
 CMD [ "python", "-u", "handler.py" ]
